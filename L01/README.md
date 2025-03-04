@@ -8,4 +8,4 @@
 ## 결과 이미지
 | 원본 이미지 | 그레이스케일 변환 | ROI 저장 |
 |-------------|----------------|---------|
-| ![원본](L01/img/mong.jpg) | ![Grayscale](L01/output/gray.jpg) | ![ROI](L01/output/ROI.jpg) |
+| ![원본](img/mong.jpg) | ![Grayscale](output/gray.jpg) | ![ROI](output/ROI.jpg) |
