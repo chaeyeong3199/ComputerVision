@@ -12,6 +12,6 @@
    - 선택한 영역만 따로 저장
 
 ## 결과 이미지
-| 그레이스케일 변환 | 에지 검출 | ROI 저장 |
+| 1) 그레이스케일 변환 | 2) 에지 검출 | 3) ROI 저장 |
 |-------------|----------------|---------|
 | ![원본](output/img_gray.jpg) | ![Grayscale](output/gray.jpg) | ![ROI](output/ROI_result.jpg) |
