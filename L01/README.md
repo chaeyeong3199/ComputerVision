@@ -6,6 +6,6 @@
 3. **마우스로 ROI(관심영역) 선택 및 저장**
 
 ## 결과 이미지
-| 원본 이미지 | 그레이스케일 변환 및 에지 검출 | ROI 저장 |
+| 그레이스케일 변환 | 에지 검출 | ROI 저장 |
 |-------------|----------------|---------|
 | ![원본](output/img_gray.jpg) | ![Grayscale](output/gray.jpg) | ![ROI](output/ROI_result.jpg) |
