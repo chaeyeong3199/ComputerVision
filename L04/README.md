@@ -59,4 +59,4 @@
    ```python
   change = cv.warpAffine(img, matrix, (int(cols*1.5),int(rows*1.5)), flags=cv.INTER_LINEAR)
    ```
-   <img src="output/change.jpg" width="500" height="300">
+   <img src="output/change.jpg" width="600" height="300">
