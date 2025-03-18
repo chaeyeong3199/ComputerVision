@@ -59,4 +59,9 @@
    ```python
   change = cv.warpAffine(img, matrix, (int(cols*1.5),int(rows*1.5)), flags=cv.INTER_LINEAR)
    ```
+   3. 원본 이미지와 회전 및 확대된 이미지를 한 화면에 비교
+   ```python
+   cv.imshow('Original image', img)
+   cv.imshow('Change image', change)
+   ```
    <img src="output/change.jpg" width="600" height="300">
