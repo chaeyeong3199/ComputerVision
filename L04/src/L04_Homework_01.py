@@ -12,5 +12,13 @@ if img is None:
 t,bin_img=cv.threshold(gray,127,255,cv.THRESH_BINARY)
 
 h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
-plt.plot(h,color='r',linewidth=1)
+g=cv.calcHist([gray],[0],None,[256],[0,256]) 
+
+plt.figure(figsize=(10,5))
+plt.subplot(1,2,1)
+plt.plot(g,color='r',linewidth=1)
+plt.title("Grayscale Histogram")
+plt.subplot(1,2,2)
+plt.plot(h,color='b',linewidth=1)
+plt.title("Binary Histogram")
 plt.show()
