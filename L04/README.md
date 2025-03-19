@@ -17,9 +17,16 @@
    ```
    4. 이진화된 이미지의 히스토그램을 계산하고 시각화
    ```python
-  h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
-  plt.plot(h,color='r',linewidth=1)
-  plt.show()
+   h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
+   g=cv.calcHist([gray],[0],None,[256],[0,256]) 
+   plt.figure(figsize=(10,5))
+   plt.subplot(1,2,1)
+   plt.plot(g,color='r',linewidth=1)
+   plt.title("Grayscale Histogram")
+   plt.subplot(1,2,2)
+   plt.plot(h,color='b',linewidth=1)
+   plt.title("Binary Histogram")
+   plt.show()
    ```
   #### 결과이미지
    <img src="output/Hist.jpg" width="700" height="350">
