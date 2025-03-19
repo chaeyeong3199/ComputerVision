@@ -15,7 +15,7 @@
    ```python
   t,bin_img=cv.threshold(gray,127,255,cv.THRESH_BINARY)
    ```
-   4. 이진화된 이미지의 히스토그램을 계산하고 시각화
+   4. 그레이스케일과 이진화된 이미지의 히스토그램을 계산하고 시각화
    ```python
    h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
    g=cv.calcHist([gray],[0],None,[256],[0,256]) 
