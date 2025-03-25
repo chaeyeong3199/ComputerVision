@@ -67,4 +67,4 @@
   mask2 = np.where((mask == cv.GC_BGD) | (mask == cv.GC_PR_BGD),0,1).astype('uint8')
   dst = img * mask2[:, :, np.newaxis]
    ```
-   <img src="output/mask.jpg" width="750" height="300">
+   <img src="output/mask.jpg" width="800" height="300">
