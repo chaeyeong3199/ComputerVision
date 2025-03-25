@@ -15,14 +15,21 @@
    ```python
   t,bin_img=cv.threshold(gray,127,255,cv.THRESH_BINARY)
    ```
-   4. 이진화된 이미지의 히스토그램을 계산하고 시각화
+   4. 그레이스케일과 이진화된 이미지의 히스토그램을 계산하고 시각화
    ```python
-  h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
-  plt.plot(h,color='r',linewidth=1)
-  plt.show()
+   h=cv.calcHist([bin_img],[0],None,[256],[0,256]) 
+   g=cv.calcHist([gray],[0],None,[256],[0,256]) 
+   plt.figure(figsize=(10,5))
+   plt.subplot(1,2,1)
+   plt.plot(g,color='r',linewidth=1)
+   plt.title("Grayscale Histogram")
+   plt.subplot(1,2,2)
+   plt.plot(h,color='b',linewidth=1)
+   plt.title("Binary Histogram")
+   plt.show()
    ```
   #### 결과이미지
-   <img src="output/Hist.jpg" width="350" height="350">
+   <img src="output/Hist.jpg" width="700" height="350">
      
 ### 2. 모폴로지 연산 적용하기
    1. 이미지 이진화 및 일부 추출
