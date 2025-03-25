@@ -22,7 +22,7 @@
   edge_strength=cv.convertScaleAbs(magnitude)
    ```
   #### 결과이미지
-   <img src="output/Edge_Strength.jpg" width="600" height="300">
+   <img src="output/Edge_Strength.jpg" width="700" height="300">
      
 ### 2. 캐니 에지 및 허프 변환을 이용한 직선 검출
    1. 캐니(Canny) 에지 검출을 사용하여 에지 맵을 생성
@@ -67,4 +67,4 @@
   mask2 = np.where((mask == cv.GC_BGD) | (mask == cv.GC_PR_BGD),0,1).astype('uint8')
   dst = img * mask2[:, :, np.newaxis]
    ```
-   <img src="output/change.jpg" width="600" height="300">
+   <img src="output/line.jpg" width="600" height="300">
