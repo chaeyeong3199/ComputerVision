@@ -116,6 +116,7 @@ plt.show()
    
 ### 3. GrabCut을 이용한 대화식 영역 분할 및 객체 추출
    1. GrabCut parameter 설정
+   - 사각형 영역 (x=200, y=100, width=920, height=730) 지정
    ```python
   mask = np.zeros(img.shape[:2], np.uint8)
   bgdModel = np.zeros((1, 65), np.float64)
