@@ -30,7 +30,7 @@
   edge=cv.Canny(img,100,200)
    ```
    2. 허프 변환(Hough Transform)을 사용하여 이미지에서 직선을 검출
-   - rho=1, theta=np.pi/180=1, threshold=80, minLineLength=15, maxLineGap=5
+   - rho(거리해상도)=1, theta(각도해상도)=np.pi/180=1, threshold(임계값)=80, minLineLength=15, maxLineGap=5
    ```python
   lines=cv.HoughLinesP(edge, 1, np.pi/180, 80, minLineLength=15, maxLineGap=5)
    ```
@@ -55,16 +55,16 @@
   mode = cv.GC_INIT_WITH_RECT
   iterCount = 1
   rc = (200, 100, 920, 730)
-  
    ```
-   2. Grapcut 알고리즘 수행 
+   2. Grapcut 알고리즘 수행
    ```python
   cv.grabCut(img, mask, rc, bgdModel, fgdModel, iterCount, mode)
    ```
    3. 마스크를 사용해 원본 이미지에서 배경을 제거
-   - cv.GC_BGD(0), cv.GC_PR_BGD(2) 사용
+   - mask 값은 cv.GC_BGD(0), cv.GC_PR_BGD(2)를 사용
    ```python
   mask2 = np.where((mask == cv.GC_BGD) | (mask == cv.GC_PR_BGD),0,1).astype('uint8')
   dst = img * mask2[:, :, np.newaxis]
    ```
+  #### 결과이미지
    <img src="output/mask.jpg" width="800" height="300">
