@@ -44,7 +44,7 @@
    ```
    
   #### 결과이미지 
-   <img src="output/Line.jpg" width="750" height="200">
+   <img src="output/Line.jpg" width="750" height="300">
    
 ### 3. GrabCut을 이용한 대화식 영역 분할 및 객체 추출
    1. GrabCut parameter 설정 및 객체 추출
@@ -67,4 +67,4 @@
   mask2 = np.where((mask == cv.GC_BGD) | (mask == cv.GC_PR_BGD),0,1).astype('uint8')
   dst = img * mask2[:, :, np.newaxis]
    ```
-   <img src="output/line.jpg" width="600" height="300">
+   <img src="output/Line.jpg" width="600" height="300">
