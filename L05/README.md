@@ -53,6 +53,7 @@
      plt.show()
      ```
   </details>
+  
   #### 결과이미지
    <img src="output/Edge_Strength.jpg" width="700" height="300">
      
