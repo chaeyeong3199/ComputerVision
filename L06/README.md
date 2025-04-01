@@ -27,10 +27,37 @@
    ```python
   gray=cv.drawKeypoints(gray,kp,None,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
    ```
+  <details>
+     <summary>전체코드</summary>
+     
+   ```python
+      import cv2 as cv
+      import matplotlib.pyplot as plt
 
+      img=cv.imread('L06\img\mot_color70.jpg')
+      gray=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
+
+      sift=cv.SIFT_create(nfeatures=1000)
+      kp,des=sift.detectAndCompute(gray,None)
+
+      gray=cv.drawKeypoints(gray,kp,None,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+      fig, axes = plt.subplots(1, 2, figsize=(15,5))
+      axes[0].imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
+      axes[0].set_title("Original Image")
+      axes[0].axis("off")
+
+      axes[1].imshow(gray)
+      axes[1].set_title("SIFT Image")
+      axes[1].axis("off")
+      plt.tight_layout()
+      plt.show()
+   ```
+  </details>
 
   #### 결과이미지
-   ![alt text](image.png)
+   ![image](https://github.com/user-attachments/assets/df02c968-9d3d-461c-ae76-6e53dcb1abb1)
+
      
 ### 2. SIFT를 이용한 두 영상 간 특징점 매칭
    1. 두 이미지의 SIFT 특징점 추출
@@ -66,8 +93,50 @@
    img_match=np.empty((max(img1.shape[0],img2.shape[0]),img1.shape[1]+img2.shape[1],3),dtype=np.uint8)
    cv.drawMatches(img1,kp1,img2,kp2,good_match,img_match,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
    ```
+  <details>
+     <summary>전체코드</summary>
+     
+   ```python
+   import cv2 as cv
+   import numpy as np
+   import matplotlib.pyplot as plt
+   
+   img1=cv.imread('L06\img\mot_color70.jpg')[190:350,440:560]
+   gray1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
+   img2=cv.imread('L06\img\mot_color83.jpg')
+   gray2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
+   
+   sift=cv.SIFT_create()
+   kp1,des1=sift.detectAndCompute(gray1,None)
+   kp2,des2=sift.detectAndCompute(gray2,None)
+   
+   index_params = dict(algorithm=1, trees=5)
+   search_params = dict(checks=50)
+   
+   flann_matcher=cv.FlannBasedMatcher(index_params, search_params)
+   knn_match=flann_matcher.knnMatch(des1,des2,2)
+   
+   T=0.7
+   good_match=[]
+   for nearest1,nearest2 in knn_match:
+       if (nearest1.distance/nearest2.distance)<T:
+           good_match.append(nearest1)
+   
+   img_match=np.empty((max(img1.shape[0],img2.shape[0]),img1.shape[1]+img2.shape[1],3),dtype=np.uint8)
+   cv.drawMatches(img1,kp1,img2,kp2,good_match,img_match,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+   
+   plt.figure(figsize=(10,5))
+   plt.imshow(cv.cvtColor(img_match, cv.COLOR_BGR2RGB))
+   plt.title("Matching Result")
+   plt.axis("off")
+   plt.tight_layout()
+   plt.show()
+   ```
+  </details>
+
   #### 결과이미지 
-   ![alt text](image-1.png)
+  ![image](https://github.com/user-attachments/assets/1da00a6d-f605-46f1-9150-65fe6e1ef4ff)
+
    
 ### 3. 호모그래피를 이용한 이미지 정합 (Image Alignment)
    1. 두 이미지의 SIFT 특징점 추출
@@ -100,5 +169,59 @@
    h1, w1 = img1.shape[0],img1.shape[1]
    warp= cv.warpPerspective(img2, H, (w1, h1))
    ```
+  <details>
+     <summary>전체코드</summary>
+     
+   ```python
+   import cv2 as cv
+   import numpy as np
+   import matplotlib.pyplot as plt
+   
+   img1=cv.imread('L06\img\img1.jpg')
+   gray1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
+   img2=cv.imread('L06\img\img2.jpg')
+   gray2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
+   
+   sift=cv.SIFT_create()
+   kp1,des1=sift.detectAndCompute(gray1,None)
+   kp2,des2=sift.detectAndCompute(gray2,None)
+   
+   bf_matcher=cv.BFMatcher(cv.NORM_L2, crossCheck=False)
+   bf_match=bf_matcher.knnMatch(des1, des2, 2)
+   
+   T=0.7
+   good_match=[]
+   for nearest1,nearest2 in bf_match:
+       if (nearest1.distance/nearest2.distance)<T:
+           good_match.append(nearest1)
+   
+   points1=np.float32([kp1[gm.queryIdx].pt for gm in good_match])
+   points2=np.float32([kp2[gm.trainIdx].pt for gm in good_match])
+   
+   H, mask = cv.findHomography(points1, points2, cv.RANSAC)
+   
+   h1, w1 = img1.shape[0],img1.shape[1]
+   warp= cv.warpPerspective(img2, H, (w1, h1))
+   img_match=cv.drawMatches(img1,kp1,img2,kp2,good_match,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+   
+   fig, axes = plt.subplots(1, 3, figsize=(20,5))
+   axes[0].imshow(img1)
+   axes[0].set_title("Original Image")
+   axes[0].axis("off")
+   
+   axes[1].imshow(warp)
+   axes[1].set_title("Warped Image")
+   axes[1].axis("off")
+   
+   axes[2].imshow(img_match)
+   axes[2].set_title("Matching Result")
+   axes[2].axis("off")
+   
+   plt.tight_layout()
+   plt.show()
+   ```
+  </details>
+
    #### 결과이미지 
-   ![alt text](image.png)
+   ![image](https://github.com/user-attachments/assets/3c00d5e2-400e-4271-8706-ed245c82e9a7)
+
