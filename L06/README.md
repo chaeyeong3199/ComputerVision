@@ -25,13 +25,16 @@
    - image: 입력 이미지, mask: 특징점 검출에 사용할 마스크
      
    **4. drawKeypoints()를 사용하여 특징점을 이미지에 시각화**
-
+   
    ```python
   gray=cv.drawKeypoints(gray,kp,None,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
    ```
    - **cv2.drawKeypoints(image, keypoints, outImage, color=None, flags=None)** 
    - image: 입력 영상, keypoints: 검출된 특징점 정보, outImage: 출력 영상
    - flags: 특징점 표현 방법 -> DEFAULT(위치만 표현), **DRAW_RICH_KEYPOINTS(크기와 방향을 반영)**
+   - 특징점(원)의 크기: 이미지에서 검출된 Scale에 따라 다름
+   -> 작은 크기의 특징점 → 세밀한 특징 (예: 텍스처가 많은 영역)
+   -> 큰 크기의 특징점 → 큰 구조적인 특징 (예: 코너, 엣지 등)
      
   <details>
      <summary>전체코드</summary>
@@ -73,7 +76,7 @@
   kp2,des2=sift.detectAndCompute(gray2,None)
    ```
 
-   **2. FlannBasedMatcher()을 통해 특징점 매칭**
+   **2-1. FlannBasedMatcher()을 통해 특징점 매칭**
    ```python
    index_params = dict(algorithm=1, trees=5)
    search_params = dict(checks=50)
@@ -82,6 +85,12 @@
    - **cv2.FlannBasedMatcher(indexParams, searchParams)**: FLANN (Fast Library for Approximate Nearest Neighbors) 기반 Matcher 생성
    - index_params: 특징점 검색을 위한 구조 설정 (KD-Tree 사용)
    - search_params: 검색 과정에서 고려할 이웃 개수 설정
+
+   **2-2. BFMatcher()을 통해 특징점 매칭**
+   ```python
+  bf_matcher=cv.BFMatcher(cv.NORM_L2, crossCheck=False)
+  bf_match=bf_matcher.knnMatch(des1, des2, 2)
+   ```
 
    **3. 최근접 이웃 거리 비율을 적용한 KNN 매칭**
 
@@ -242,5 +251,7 @@
   </details>
 
    #### 결과이미지 
-   ![image](https://github.com/user-attachments/assets/3c00d5e2-400e-4271-8706-ed245c82e9a7)
+   ![image](https://github.com/user-attachments/assets/3e9da3bd-6251-440f-947c-cd9c87c8b087)
+
+
 
