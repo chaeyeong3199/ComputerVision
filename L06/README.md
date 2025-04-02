@@ -32,9 +32,9 @@
    - **cv2.drawKeypoints(image, keypoints, outImage, color=None, flags=None)** 
    - image: 입력 영상, keypoints: 검출된 특징점 정보, outImage: 출력 영상
    - flags: 특징점 표현 방법 -> DEFAULT(위치만 표현), **DRAW_RICH_KEYPOINTS(크기와 방향을 반영)**
-   - 특징점(원)의 크기: 이미지에서 검출된 Scale에 따라 다름
-   -> 작은 크기의 특징점 → 세밀한 특징 (예: 텍스처가 많은 영역)
-   -> 큰 크기의 특징점 → 큰 구조적인 특징 (예: 코너, 엣지 등)
+   - 특징점(원)의 크기: 이미지에서 검출된 Scale에 따라 다름 <br>
+     작은 크기의 특징점 → 세밀한 특징 (예: 텍스처가 많은 영역) <br>
+     큰 크기의 특징점 → 큰 구조적인 특징 (예: 코너, 엣지 등)
      
   <details>
      <summary>전체코드</summary>
@@ -191,67 +191,83 @@
    **4. 이미지를 변환하여 다른 이미지와 정렬**
 
    ```python
-   h1, w1 = img1.shape[0],img1.shape[1]
-   warp= cv.warpPerspective(img2, H, (w1, h1))
+  h1, w1 = img1.shape[:2]
+  h2, w2 = img2.shape[:2]
+  
+  panorama_width = w1 + w2
+  panorama_height = max(h1, h2)
+  
+  warp = cv.warpPerspective(img1, H, (w1 + w2, h2))
+  warp[0:h1, 0:w1] = img2
    ```
-   - **cv.warpPerspective(img, H, size)**: 이미지의 투시 변환(perspective transformation)을 수행
-   - 출력 크기를 원본 이미지 크기와 동일하게 설정
+   - 첫 번째 이미지를 호모그래피 행렬 H을 이용하여 투시 변환(perspective transformation) 수행.
+   - 변환된 이미지 크기를 (w1 + w2, h2)로 설정하여, 두 번째 이미지와 병합할 충분한 공간을 확보.
+   - warp[0:h1, 0:w1] = img2 : 변환된 첫 번째 이미지 위에 두 번째 이미지를 합쳐서 정렬된 이미지 생성
 
   <details>
      <summary>전체코드</summary>
      
    ```python
-   import cv2 as cv
-   import numpy as np
-   import matplotlib.pyplot as plt
-   
-   img1=cv.imread('L06\img\img1.jpg')
-   gray1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
-   img2=cv.imread('L06\img\img2.jpg')
-   gray2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
-   
-   sift=cv.SIFT_create()
-   kp1,des1=sift.detectAndCompute(gray1,None)
-   kp2,des2=sift.detectAndCompute(gray2,None)
-   
-   bf_matcher=cv.BFMatcher(cv.NORM_L2, crossCheck=False)
-   bf_match=bf_matcher.knnMatch(des1, des2, 2)
-   
-   T=0.7
-   good_match=[]
-   for nearest1,nearest2 in bf_match:
-       if (nearest1.distance/nearest2.distance)<T:
-           good_match.append(nearest1)
-   
-   points1=np.float32([kp1[gm.queryIdx].pt for gm in good_match])
-   points2=np.float32([kp2[gm.trainIdx].pt for gm in good_match])
-   
-   H, mask = cv.findHomography(points1, points2, cv.RANSAC)
-   
-   h1, w1 = img1.shape[0],img1.shape[1]
-   warp= cv.warpPerspective(img2, H, (w1, h1))
-   img_match=cv.drawMatches(img1,kp1,img2,kp2,good_match,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-   
-   fig, axes = plt.subplots(1, 3, figsize=(20,5))
-   axes[0].imshow(img1)
-   axes[0].set_title("Original Image")
-   axes[0].axis("off")
-   
-   axes[1].imshow(warp)
-   axes[1].set_title("Warped Image")
-   axes[1].axis("off")
-   
-   axes[2].imshow(img_match)
-   axes[2].set_title("Matching Result")
-   axes[2].axis("off")
-   
-   plt.tight_layout()
-   plt.show()
+  import cv2 as cv
+  import numpy as np
+  import matplotlib.pyplot as plt
+  
+  img1=cv.imread('L06\img\img2.jpg')
+  gray1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
+  img2=cv.imread('L06\img\img1.jpg')
+  gray2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
+  
+  sift=cv.SIFT_create()
+  kp1,des1=sift.detectAndCompute(gray1,None)
+  kp2,des2=sift.detectAndCompute(gray2,None)
+  
+  bf_matcher=cv.BFMatcher(cv.NORM_L2, crossCheck=False)
+  bf_match=bf_matcher.knnMatch(des1, des2, 2)
+  
+  T=0.7
+  good_match=[]
+  for nearest1,nearest2 in bf_match:
+      if (nearest1.distance/nearest2.distance)<T:
+          good_match.append(nearest1)
+  
+  points1=np.float32([kp1[gm.queryIdx].pt for gm in good_match])
+  points2=np.float32([kp2[gm.trainIdx].pt for gm in good_match])
+  
+  H, mask = cv.findHomography(points1, points2, cv.RANSAC)
+  
+  h1, w1 = img1.shape[:2]
+  h2, w2 = img2.shape[:2]
+  
+  panorama_width = w1 + w2
+  panorama_height = max(h1, h2)
+  
+  warp = cv.warpPerspective(img1, H, (w1 + w2, h2))
+  warp[0:h1, 0:w1] = img2
+  img_match=cv.drawMatches(img1,kp1,img2,kp2,good_match,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+  
+  fig, axes = plt.subplots(1, 3, figsize=(20,5))
+  axes[0].imshow(img1)
+  axes[0].set_title("Original Image")
+  axes[0].axis("off")
+  
+  axes[1].imshow(warp)
+  axes[1].set_title("Warped Image")
+  axes[1].axis("off")
+  
+  axes[2].imshow(img_match)
+  axes[2].set_title("Matching Result")
+  axes[2].axis("off")
+  
+  plt.tight_layout()
+  plt.show()
    ```
   </details>
 
    #### 결과이미지 
-   ![image](https://github.com/user-attachments/assets/3e9da3bd-6251-440f-947c-cd9c87c8b087)
+   ![image](https://github.com/user-attachments/assets/fa264a53-6afa-4308-b768-48e40bb990ba)
+
+
+
 
 
 
