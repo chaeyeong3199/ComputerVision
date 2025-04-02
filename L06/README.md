@@ -183,10 +183,11 @@
    points1=np.float32([kp1[gm.queryIdx].pt for gm in good_match])
    points2=np.float32([kp2[gm.trainIdx].pt for gm in good_match])
 
-   H, mask = cv.findHomography(points1, points2, cv.RANSAC)
+   H, mask = cv.findHomography(points2, points1, cv.RANSAC)
    ```
    - np.float32(): 특징점 좌표를 실수형 배열로 변환
    - **cv.findHomography(srcPoints, dstPoints, method)**: RANSAC을 사용하여 변환 행렬 H를 계산 -> outlier 제거
+   - 두 번째 이미지(img2)를 변환해 첫 번째 이미지(img1)에 정렬하기 위해 points2 → points1 순서로 사용
 
    **4. 이미지를 변환하여 다른 이미지와 정렬**
 
@@ -194,15 +195,12 @@
   h1, w1 = img1.shape[:2]
   h2, w2 = img2.shape[:2]
   
-  panorama_width = w1 + w2
-  panorama_height = max(h1, h2)
-  
-  warp = cv.warpPerspective(img1, H, (w1 + w2, h2))
-  warp[0:h1, 0:w1] = img2
+  warp = cv.warpPerspective(img2, H, (w1 + w2, h2))
+  warp[0:h1, 0:w1] = img1
    ```
-   - 첫 번째 이미지를 호모그래피 행렬 H을 이용하여 투시 변환(perspective transformation) 수행.
-   - 변환된 이미지 크기를 (w1 + w2, h2)로 설정하여, 두 번째 이미지와 병합할 충분한 공간을 확보.
-   - warp[0:h1, 0:w1] = img2 : 변환된 첫 번째 이미지 위에 두 번째 이미지를 합쳐서 정렬된 이미지 생성
+   - 두 번째 이미지를 호모그래피 행렬 H을 이용하여 투시 변환(perspective transformation) 수행.
+   - 변환된 이미지 크기를 (w1 + w2, h2)로 설정하여, 병합할 충분한 공간을 확보.
+   - warp[0:h1, 0:w1] = img1 : 변환된 warp의 왼쪽에 img1을 삽입하여 두 이미지를 정렬.
 
   <details>
      <summary>전체코드</summary>
@@ -214,7 +212,7 @@
   
   img1=cv.imread('L06\img\img2.jpg')
   gray1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
-  img2=cv.imread('L06\img\img1.jpg')
+  img2=cv.imread('L06\img\img3.jpg')
   gray2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
   
   sift=cv.SIFT_create()
@@ -233,7 +231,7 @@
   points1=np.float32([kp1[gm.queryIdx].pt for gm in good_match])
   points2=np.float32([kp2[gm.trainIdx].pt for gm in good_match])
   
-  H, mask = cv.findHomography(points1, points2, cv.RANSAC)
+  H, mask = cv.findHomography(points2, points1, cv.RANSAC)
   
   h1, w1 = img1.shape[:2]
   h2, w2 = img2.shape[:2]
@@ -241,22 +239,18 @@
   panorama_width = w1 + w2
   panorama_height = max(h1, h2)
   
-  warp = cv.warpPerspective(img1, H, (w1 + w2, h2))
-  warp[0:h1, 0:w1] = img2
+  warp = cv.warpPerspective(img2, H, (w1 + w2, h2))
+  warp[0:h1, 0:w1] = img1
   img_match=cv.drawMatches(img1,kp1,img2,kp2,good_match,None,flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
   
-  fig, axes = plt.subplots(1, 3, figsize=(20,5))
-  axes[0].imshow(img1)
-  axes[0].set_title("Original Image")
+  fig, axes = plt.subplots(1, 2, figsize=(20,5))
+  axes[0].imshow(warp)
+  axes[0].set_title("Warped Image")
   axes[0].axis("off")
   
-  axes[1].imshow(warp)
-  axes[1].set_title("Warped Image")
+  axes[1].imshow(img_match)
+  axes[1].set_title("Matching Result")
   axes[1].axis("off")
-  
-  axes[2].imshow(img_match)
-  axes[2].set_title("Matching Result")
-  axes[2].axis("off")
   
   plt.tight_layout()
   plt.show()
@@ -264,7 +258,8 @@
   </details>
 
    #### 결과이미지 
-   ![image](https://github.com/user-attachments/assets/fa264a53-6afa-4308-b768-48e40bb990ba)
+   ![image](https://github.com/user-attachments/assets/d605a8e2-fc97-4570-85e0-553b7b3974bf)
+
 
 
 
