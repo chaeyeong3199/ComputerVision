@@ -48,6 +48,7 @@
 
   #### 결과이미지
 ![output1-2](https://github.com/user-attachments/assets/02c81197-e90c-4da0-a01c-81a3fa8cc25f)
+<br><br><br>
      
 ## 2. CIFAR-10 데이터셋을 활용한 CNN 모델 구축
 
@@ -112,6 +113,7 @@
 
   ### 예측결과 시각화 
 ![output2-2](https://github.com/user-attachments/assets/6fd3f93c-e4d2-4961-a82c-f66e0e5accd0)
+<br><br><br>
    
 ## 3. 전이 학습을 활용한 이미지 분류기 개선
 
