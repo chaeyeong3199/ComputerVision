@@ -181,7 +181,7 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
-![image](https://github.com/user-attachments/assets/d91a0ec3-540a-4f00-bc63-e9fef5dd0d33)
+![image](https://github.com/user-attachments/assets/6468d63c-f32c-450d-9bc7-051c1af32325)
 
   #### 결과이미지
 ![image](https://github.com/user-attachments/assets/b627f294-120d-46bb-a48c-5930555f4a82)
