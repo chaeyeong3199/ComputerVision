@@ -1,6 +1,6 @@
 # 📌 L07: Recognition
 
-## 1. SIFT를 이용한 특징점 검출 및 시각화
+## 1. 간단한 이미지 분류기 구현
 
 ### 1. 데이터 로드 및 전처리
    
@@ -176,7 +176,6 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
-   - 
 
   #### 결과이미지
    ![alt text](image.png)
