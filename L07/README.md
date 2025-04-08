@@ -44,9 +44,10 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
+![output1-1](https://github.com/user-attachments/assets/4d74ac9c-2a2a-4bb4-96eb-1b0f8a763fd9)
 
   #### 결과이미지
-   ![alt text](image.png)
+![output1-2](https://github.com/user-attachments/assets/02c81197-e90c-4da0-a01c-81a3fa8cc25f)
      
 ## 2. CIFAR-10 데이터셋을 활용한 CNN 모델 구축
 
@@ -107,8 +108,10 @@
    test_loss, test_acc = model.evaluate(x_test, y_test)
    print(f"\nTest Accuracy: {test_acc:.4f}")
    ```
+![output2-1](https://github.com/user-attachments/assets/54f67e6f-05d0-40bb-9456-02d4ea631890)
+
   ### 예측결과 시각화 
-   ![alt text](image-1.png)
+![output2-2](https://github.com/user-attachments/assets/6fd3f93c-e4d2-4961-a82c-f66e0e5accd0)
    
 ## 3. 전이 학습을 활용한 이미지 분류기 개선
 
@@ -176,6 +179,7 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
+![image](https://github.com/user-attachments/assets/d91a0ec3-540a-4f00-bc63-e9fef5dd0d33)
 
   #### 결과이미지
-   ![alt text](image.png)
+![image](https://github.com/user-attachments/assets/b627f294-120d-46bb-a48c-5930555f4a82)
