@@ -135,7 +135,7 @@
    val_gen = ImageDataGenerator(rescale=1./255).flow_from_directory(val_dir, target_size=(224, 224), batch_size=16, class_mode='binary')
 
    ```
-   - 사용자 정의 데이터셋에 대한 이진 분류를 수행
+   - 사용자 정의 데이터셋([kaggle-cat and dog](https://www.kaggle.com/datasets/tongpython/cat-and-dog?resource=download))에 대한 이진 분류를 수행
    - 학습/검증 데이터를 ImageDataGenerator를 통해 불러오고 증강
    - 학습 데이터는 회전, 이동, 반전 등을 적용하여 성능을 높임 
 
