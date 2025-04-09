@@ -181,7 +181,14 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
-![image](https://github.com/user-attachments/assets/6468d63c-f32c-450d-9bc7-051c1af32325)
+- VGG 모델 정확도 <br>
 
-  #### 결과이미지
-![image](https://github.com/user-attachments/assets/b627f294-120d-46bb-a48c-5930555f4a82)
+![image](https://github.com/user-attachments/assets/6468d63c-f32c-450d-9bc7-051c1af32325)
+- CNN 모델 정확도 <br>
+
+![image](https://github.com/user-attachments/assets/aed0db98-ed93-4f98-a8d7-a082f7d7fdbd)
+
+### 결과 이미지 (VGG vs CNN)
+![image](https://github.com/user-attachments/assets/b627f294-120d-46bb-a48c-5930555f4a82) ![image](https://github.com/user-attachments/assets/de9e2d03-7396-493a-9c93-c87d3c9ac962)
+
+
