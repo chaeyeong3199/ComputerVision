@@ -44,9 +44,11 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
+![output1-1](https://github.com/user-attachments/assets/4d74ac9c-2a2a-4bb4-96eb-1b0f8a763fd9)
 
   #### 결과이미지
-   ![alt text](image.png)
+![output1-2](https://github.com/user-attachments/assets/02c81197-e90c-4da0-a01c-81a3fa8cc25f)
+<br><br><br>
      
 ## 2. CIFAR-10 데이터셋을 활용한 CNN 모델 구축
 
@@ -107,8 +109,11 @@
    test_loss, test_acc = model.evaluate(x_test, y_test)
    print(f"\nTest Accuracy: {test_acc:.4f}")
    ```
+![output2-1](https://github.com/user-attachments/assets/54f67e6f-05d0-40bb-9456-02d4ea631890)
+
   ### 예측결과 시각화 
-   ![alt text](image-1.png)
+![output2-2](https://github.com/user-attachments/assets/6fd3f93c-e4d2-4961-a82c-f66e0e5accd0)
+<br><br><br>
    
 ## 3. 전이 학습을 활용한 이미지 분류기 개선
 
@@ -130,7 +135,7 @@
    val_gen = ImageDataGenerator(rescale=1./255).flow_from_directory(val_dir, target_size=(224, 224), batch_size=16, class_mode='binary')
 
    ```
-   - 사용자 정의 데이터셋에 대한 이진 분류를 수행
+   - 사용자 정의 데이터셋([kaggle-cat and dog](https://www.kaggle.com/datasets/tongpython/cat-and-dog?resource=download))에 대한 이진 분류를 수행
    - 학습/검증 데이터를 ImageDataGenerator를 통해 불러오고 증강
    - 학습 데이터는 회전, 이동, 반전 등을 적용하여 성능을 높임 
 
@@ -176,6 +181,14 @@
    loss, acc = model.evaluate(x_test, y_test, verbose=0)
    print(f"정확도: {acc:.4f}")
    ```
+- VGG 모델 정확도 <br>
 
-  #### 결과이미지
-   ![alt text](image.png)
+![image](https://github.com/user-attachments/assets/6468d63c-f32c-450d-9bc7-051c1af32325)
+- CNN 모델 정확도 <br>
+
+![image](https://github.com/user-attachments/assets/aed0db98-ed93-4f98-a8d7-a082f7d7fdbd)
+
+### 결과 이미지 (VGG vs CNN)
+![image](https://github.com/user-attachments/assets/b627f294-120d-46bb-a48c-5930555f4a82) ![image](https://github.com/user-attachments/assets/de9e2d03-7396-493a-9c93-c87d3c9ac962)
+
+
