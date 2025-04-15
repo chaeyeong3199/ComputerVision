@@ -106,6 +106,7 @@
    - 해당 ID와 경계 상자를 비디오프레임에 표시하여 실시간으로 출력
 
   #### 결과이미지
+![image](https://github.com/user-attachments/assets/48842f37-4c7c-4f05-8769-f43b44d6d229)
 
 <br><br><br>
      
@@ -171,5 +172,6 @@
    - ESC 키를 누르면 프로그램이 종료되도록 설정
 
   ### 결과 이미지 
+![image](https://github.com/user-attachments/assets/fc3ae3cb-fcbf-476d-8bed-19b09b4a841f)
 
 <br>
