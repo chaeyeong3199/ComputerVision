@@ -8,3 +8,4 @@
 - **[L05]** 에지 검출, 직선 검출, GrapCut 알고리즘 수행 → [`L05/README.md`](L05/README.md)
 - **[L06]** SIFT 특징점 검출, 특징점 매칭, 호모그래피 → [`L06/README.md`](L06/README.md)
 - **[L07]** 이미지 분류기 구현, CNN 모델 구축, 전이학습 활용 → [`L07/README.md`](L07/README.md)
+- **[L08]** SORT 알고리즘 활용, Mediapipe를 통한 얼굴 랜드마크 추출 → [`L08/README.md`](L08/README.md)
