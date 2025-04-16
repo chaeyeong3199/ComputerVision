@@ -215,9 +215,7 @@
    ```python
    cap = cv.VideoCapture(0)
    ```
-   - OpenCV의 VideoCapture를 사용하여 비디오 파일을 열기
-   - cap.get(cv.CAP_PROP_FPS)를 통해 영상의 프레임 속도(FPS)를 확인
-   - FPS를 기반으로 프레임 간 대기 시간(delay)을 계산하여 자연스러운 재생 구현
+   - OpenCV의 VideoCapture를 사용하여 웹캠 열기
 
 ### 3. 프레임 처리 및 랜드마크 검출
 
