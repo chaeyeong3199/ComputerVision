@@ -210,13 +210,10 @@
    - 눈, 입 등의 정밀 랜드마크 보정을 위해 refine_landmarks=True
    - 검출 및 추적 신뢰도 설정 (min_detection_confidence, min_tracking_confidence)
    
-### 2. 영상 불러오기 및 재생 속도 설정
+### 2. 웹캠 캡쳐 시작
 
    ```python
-   cap = cv.VideoCapture('img/face.mp4')
-
-   fps = cap.get(cv.CAP_PROP_FPS)
-   delay = int(1000 / fps) 
+   cap = cv.VideoCapture(0)
    ```
    - OpenCV의 VideoCapture를 사용하여 비디오 파일을 열기
    - cap.get(cv.CAP_PROP_FPS)를 통해 영상의 프레임 속도(FPS)를 확인
@@ -300,6 +297,6 @@
   </details>
   
   ### 결과 이미지 
-![image](https://github.com/user-attachments/assets/fc3ae3cb-fcbf-476d-8bed-19b09b4a841f)
+![image](https://github.com/user-attachments/assets/5df21191-c312-4e9d-ab50-2aa5bd8f5e28)
 
 <br>
